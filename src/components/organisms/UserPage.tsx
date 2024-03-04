@@ -1,3 +1,4 @@
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetUserQuery } from "../../redux/userAPI";
 import {
@@ -12,12 +13,7 @@ import ErrorPage from "../molecules/errorPage";
 
 function UserPage() {
   const { userId } = useParams();
-
-  console.log(userId, "userId");
-
   const { data: user, isLoading } = useGetUserQuery(Number(userId));
-  console.log(user, "data");
-  console.log(isLoading, "isLoading");
 
   if (isLoading) {
     return (
