@@ -2,6 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import {
+  StyledGrid,
+  StyledHomeContainer,
+  StyledImage,
+  StyledInfoContainer,
+  StyledList,
+} from "./HomePage.style";
 // import { useSearchParams } from "react-router-dom";
 
 type User = {
@@ -35,33 +42,33 @@ function Home() {
     );
   } else
     return (
-      <div>
-        <h3>Users:</h3>
-        {users.map((user: User) => {
-          return (
-            <div key={user.id}>
-              <img width="160px" src={user.avatar} alt={user.first_name}></img>
-              <div>
-                <ul>
-                  <li>
-                    <p>Name:</p>
-                    <p>
+      <StyledHomeContainer>
+        <StyledGrid>
+          {users.map((user: User) => {
+            return (
+              <div key={user.id}>
+                <StyledImage
+                  src={user.avatar}
+                  alt={user.first_name}
+                ></StyledImage>
+                <StyledInfoContainer>
+                  <StyledList>
+                    <dt>Name:</dt>
+                    <dd>
                       {user.first_name} {user.last_name}
-                    </p>
-                  </li>
-                  <li>
-                    <p>Email:</p>
-                    <p>{user.email}</p>
-                  </li>
-                </ul>
-                <a href={`/user/${user.id}`}>
-                  <button>See more</button>
-                </a>
+                    </dd>
+                    <dt>Email:</dt>
+                    <dd>{user.email}</dd>
+                  </StyledList>
+                  <a href={`/user/${user.id}`}>
+                    <button>See more</button>
+                  </a>
+                </StyledInfoContainer>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </StyledGrid>
+      </StyledHomeContainer>
     );
 }
 
