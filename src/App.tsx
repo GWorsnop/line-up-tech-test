@@ -8,9 +8,11 @@ import { Container } from "./components/styles/Container.style";
 // Theme for the general styling of the app
 const theme = {
   colors: {
-    header: "#ebfbff",
-    body: "#fff",
-    footer: "#003333",
+    white: "#FFFFFF",
+    grey: "#F6F8FB",
+    cyan: "#399BA2",
+    blue: "##012B4F",
+    black: "#121212",
   },
 };
 
