@@ -3,6 +3,7 @@ import Home from "./components/HomePage";
 import Header from "./components/molecules/Header";
 import { Container } from "./components/styles/Container.style";
 import { ThemeProvider } from "styled-components";
+import GlobalStyles from "./components/styles/Global";
 
 // Theme for the general styling of the app
 const theme = {
@@ -16,10 +17,13 @@ const theme = {
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container>
+      <>
+        <GlobalStyles />
         <Header />
-        <Home />
-      </Container>
+        <Container>
+          <Home />
+        </Container>
+      </>
     </ThemeProvider>
   );
 }
