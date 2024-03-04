@@ -2,11 +2,16 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
-body {
-    background-color: ${({ theme }) => theme.colors.body};
-    font-family: sans-serif;
-    font-size: 1.15em;
+* {
+    box-sizing: border-box;
     margin: 0;
+}
+
+body {
+    background-color: ${({ theme }) => theme.colors.white};
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    line-height: 24px;
 }
 
 p {
