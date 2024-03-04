@@ -28,6 +28,20 @@ export const StyledGrid = styled.div`
   }
 `;
 
+// This was added as User 12 has a different sized image - not square
+export const StyledImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 200px;
+  min-width: 200px;
+
+  @media (min-width: 768px) {
+    min-height: 250px;
+    min-width: 250px;
+  }
+`;
+
 export const StyledImage = styled.img`
   border-radius: 16px;
   width: 200px;

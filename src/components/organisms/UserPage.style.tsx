@@ -14,10 +14,12 @@ export const StyledUserContainer = styled.div`
   }
 `;
 
+// This had to be changed to work for user 12.
 export const StyledImage = styled.img`
+  object-fit: cover;
+  border-radius: 50%;
   height: 200px;
   width: 200px;
-  border-radius: 100%;
 
   @media (min-width: 768px) {
     height: 250px;
