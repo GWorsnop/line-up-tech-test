@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
+  StyledButton,
+  StyledButtonContainer,
   StyledGrid,
   StyledHomeContainer,
   StyledImage,
   StyledInfoContainer,
   StyledList,
 } from "./HomePage.style";
-// import { useSearchParams } from "react-router-dom";
+import { useListUsersQuery } from "../../redux/userAPI";
 
 type User = {
   id: number;
@@ -20,19 +20,20 @@ type User = {
 };
 
 function Home() {
-  //   let [searchParams, setSearchParams] = useSearchParams();
-  const [users, setUsers] = useState<User[] | []>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const page = useSelector((state: any) => state.page);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page") ?? 1);
+  console.log(page, "page");
+
+  const { data: users, isLoading } = useListUsersQuery(page);
+  console.log(users, "data");
+  console.log(isLoading, "isLoading");
 
   useEffect(() => {
-    // setSearchParams({ page: page });
-    axios.get(`https://reqres.in/api/users?page=${page}`).then((res) => {
-      console.log(res.data.data);
-      setUsers(res.data.data);
-      setIsLoading(false);
-    });
-  }, []);
+    const pageURL = searchParams.get("page");
+    if (!pageURL) {
+      setSearchParams({ page: "1" });
+    }
+  });
 
   if (isLoading) {
     return (
@@ -44,29 +45,32 @@ function Home() {
     return (
       <StyledHomeContainer>
         <StyledGrid>
-          {users.map((user: User) => {
-            return (
-              <div key={user.id}>
-                <StyledImage
-                  src={user.avatar}
-                  alt={user.first_name}
-                ></StyledImage>
-                <StyledInfoContainer>
-                  <StyledList>
-                    <dt>Name:</dt>
-                    <dd>
-                      {user.first_name} {user.last_name}
-                    </dd>
-                    <dt>Email:</dt>
-                    <dd>{user.email}</dd>
-                  </StyledList>
-                  <a href={`/user/${user.id}`}>
-                    <button>See more</button>
-                  </a>
-                </StyledInfoContainer>
-              </div>
-            );
-          })}
+          {users &&
+            users.data.map((user: User) => {
+              return (
+                <div key={user.id}>
+                  <StyledImage
+                    src={user.avatar}
+                    alt={user.first_name}
+                  ></StyledImage>
+                  <StyledInfoContainer>
+                    <StyledList>
+                      <dt>Name:</dt>
+                      <dd>
+                        {user.first_name} {user.last_name}
+                      </dd>
+                      <dt>Email:</dt>
+                      <dd>{user.email}</dd>
+                    </StyledList>
+                  </StyledInfoContainer>
+                  <StyledButtonContainer>
+                    <a href={`/user/${user.id}`}>
+                      <StyledButton>See more</StyledButton>
+                    </a>
+                  </StyledButtonContainer>
+                </div>
+              );
+            })}
         </StyledGrid>
       </StyledHomeContainer>
     );
