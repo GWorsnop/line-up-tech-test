@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
+  StyledButton,
+  StyledButtonContainer,
   StyledGrid,
   StyledHomeContainer,
   StyledImage,
+  StyledImageContainer,
   StyledInfoContainer,
   StyledList,
 } from "./HomePage.style";
-// import { useSearchParams } from "react-router-dom";
+import { useListUsersQuery } from "../../redux/userAPI";
+import ErrorPage from "../molecules/errorPage";
 
 type User = {
   id: number;
@@ -20,19 +22,16 @@ type User = {
 };
 
 function Home() {
-  //   let [searchParams, setSearchParams] = useSearchParams();
-  const [users, setUsers] = useState<User[] | []>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const page = useSelector((state: any) => state.page);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get("page") ?? 1);
+  const { data: users, isLoading } = useListUsersQuery(page);
 
   useEffect(() => {
-    // setSearchParams({ page: page });
-    axios.get(`https://reqres.in/api/users?page=${page}`).then((res) => {
-      console.log(res.data.data);
-      setUsers(res.data.data);
-      setIsLoading(false);
-    });
-  }, []);
+    const pageURL = searchParams.get("page");
+    if (!pageURL) {
+      setSearchParams({ page: "1" });
+    }
+  });
 
   if (isLoading) {
     return (
@@ -40,17 +39,19 @@ function Home() {
         <p className="loader"></p>
       </div>
     );
-  } else
+  } else if (users?.data.length) {
     return (
       <StyledHomeContainer>
         <StyledGrid>
-          {users.map((user: User) => {
+          {users.data.map((user: User) => {
             return (
               <div key={user.id}>
-                <StyledImage
-                  src={user.avatar}
-                  alt={user.first_name}
-                ></StyledImage>
+                <StyledImageContainer>
+                  <StyledImage
+                    src={user.avatar}
+                    alt={user.first_name}
+                  ></StyledImage>
+                </StyledImageContainer>
                 <StyledInfoContainer>
                   <StyledList>
                     <dt>Name:</dt>
@@ -60,16 +61,19 @@ function Home() {
                     <dt>Email:</dt>
                     <dd>{user.email}</dd>
                   </StyledList>
-                  <a href={`/user/${user.id}`}>
-                    <button>See more</button>
-                  </a>
                 </StyledInfoContainer>
+                <StyledButtonContainer>
+                  <a href={`/user/${user.id}`}>
+                    <StyledButton>See more</StyledButton>
+                  </a>
+                </StyledButtonContainer>
               </div>
             );
           })}
         </StyledGrid>
       </StyledHomeContainer>
     );
+  } else return <ErrorPage />;
 }
 
 export default Home;
