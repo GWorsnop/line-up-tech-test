@@ -4,6 +4,7 @@ import Header from "./components/molecules/Header";
 import { Container } from "./components/styles/Container.style";
 import { ThemeProvider } from "styled-components";
 
+// Theme for the general styling of the app
 const theme = {
   colors: {
     header: "#ebfbff",
