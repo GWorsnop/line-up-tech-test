@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Home from "./components/organisms/HomePage";
+import Header from "./components/molecules/Header";
+import GlobalStyles from "./components/styles/Global.style";
+import { ThemeProvider } from "styled-components";
+import { Container } from "./components/styles/Container.style";
+
+// Theme for the general styling of the app
+const theme = {
+  colors: {
+    white: "#FFFFFF",
+    grey: "#F6F8FB",
+    cyan: "#399BA2",
+    blue: "##012B4F",
+    black: "#121212",
+  },
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyles />
+        <Header />
+        <Container>
+          <Home />
+        </Container>
+      </>
+    </ThemeProvider>
   );
 }
 
