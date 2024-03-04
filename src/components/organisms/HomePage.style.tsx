@@ -63,7 +63,7 @@ export const StyledList = styled.dl`
   gap: 0 4px;
   height: 100px;
   width: 100%;
-  padding: 0.5rem 0;
+  padding: 8px 0;
 
   dt {
     font-weight: bold;
