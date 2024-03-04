@@ -1,9 +1,9 @@
 import React from "react";
 import Home from "./components/HomePage";
 import Header from "./components/molecules/Header";
-import { Container } from "./components/styles/Container.style";
+import GlobalStyles from "./components/styles/Global.style";
 import { ThemeProvider } from "styled-components";
-import GlobalStyles from "./components/styles/Global";
+import { Container } from "./components/styles/Container.style";
 
 // Theme for the general styling of the app
 const theme = {
