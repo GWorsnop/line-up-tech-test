@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./components/HomePage";
+import Home from "./components/organisms/HomePage";
 import Header from "./components/molecules/Header";
 import GlobalStyles from "./components/styles/Global.style";
 import { ThemeProvider } from "styled-components";
