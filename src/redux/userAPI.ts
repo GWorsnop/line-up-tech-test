@@ -20,7 +20,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://reqres.in/api" }),
   endpoints: (builder) => ({
     listUsers: builder.query<ListResponse<User[]>, number | void>({
-      query: (page: number) => `/users?page=${page}`,
+      query: (page = 1) => `/users?page=${page}`,
     }),
     getUser: builder.query<ListResponse<User>, number>({
       query: (id) => `/users/${id}`,
