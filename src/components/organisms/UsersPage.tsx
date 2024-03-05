@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   StyledButton,
   StyledButtonContainer,
@@ -14,9 +14,6 @@ import {
 import { useListUsersQuery } from "../../redux/userAPI";
 import ErrorPage from "../molecules/errorPage";
 import { ArrowLeft, ArrowRight } from "react-feather";
-import type { RootState } from "../../redux/store";
-import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../../redux/pageSlice";
 import { Loader, LoadingContainer } from "../styles/Loader.style";
 
 type User = {
@@ -29,19 +26,14 @@ type User = {
 
 function UsersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pageURL = Number(searchParams.get("page"));
-  const pageStore = useSelector((state: RootState) => state.page.page);
+  const pageURL = Number(searchParams.get("page") ?? 1);
+  const { data: users, isLoading } = useListUsersQuery(pageURL);
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const { data: users, isLoading } = useListUsersQuery(pageStore);
-
-  // I struggled here - I couldn't get the URL to match the store information when reloading the page.
-  // I would to discuss this further in more detail. I tried to use 2 useEffects but still couldnt figure it out.
+  // I think this resolves the issue - now the URL is the single source of truth
 
   useEffect(() => {
-    if (!pageURL || pageURL !== pageStore) {
-      setSearchParams({ page: pageStore.toString() });
-    }
+    setSearchParams({ page: pageURL.toString() });
   });
 
   if (isLoading) {
@@ -92,14 +84,14 @@ function UsersPage() {
       {/* // These arrows use a reducer to change the store for the page number  */}
       <StyledFooter>
         <button
-          onClick={() => dispatch(decrement())}
-          disabled={pageStore === 1}
+          onClick={() => navigate(`/users?page=${pageURL - 1}`)}
+          disabled={users.total_pages === 1}
         >
           <ArrowLeft />
         </button>
         <button
-          onClick={() => dispatch(increment())}
-          disabled={pageStore === users.total_pages}
+          onClick={() => navigate(`/users?page=${pageURL + 1}`)}
+          disabled={pageURL === users.total_pages}
         >
           <ArrowRight />
         </button>
