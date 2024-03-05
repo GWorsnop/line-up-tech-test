@@ -1,17 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   StyledButton,
   StyledButtonContainer,
+  StyledFooter,
   StyledGrid,
   StyledHomeContainer,
   StyledImage,
   StyledImageContainer,
   StyledInfoContainer,
   StyledList,
-} from "./HomePage.style";
+} from "./UsersPage.style";
 import { useListUsersQuery } from "../../redux/userAPI";
 import ErrorPage from "../molecules/errorPage";
+import { ArrowLeft, ArrowRight } from "react-feather";
+import type { RootState } from "../../redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment, setToValue } from "../../redux/pageSlice";
 
 type User = {
   id: number;
@@ -21,17 +26,27 @@ type User = {
   avatar: string;
 };
 
-function Home() {
+function UsersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get("page") ?? 1);
-  const { data: users, isLoading } = useListUsersQuery(page);
+  const pageURL = Number(searchParams.get("page") ?? 1);
+  const pageStore = useSelector((state: RootState) => state.page.page);
+
+  const dispatch = useDispatch();
+  const { data: users, isLoading } = useListUsersQuery(pageStore);
+
+  // I struggled here - I couldn't get the URL to match the store information when reloading the page.
+  // I would to discuss this further in more detail. I tried to use 2 useEffects but still couldnt figure it out.
+  useEffect(() => {
+    if (pageURL !== pageStore) {
+      dispatch(setToValue(pageURL));
+    }
+  }, [pageURL]);
 
   useEffect(() => {
-    const pageURL = searchParams.get("page");
-    if (!pageURL) {
-      setSearchParams({ page: "1" });
+    if (pageURL !== pageStore) {
+      setSearchParams({ page: pageStore.toString() });
     }
-  });
+  }, [pageStore]);
 
   if (isLoading) {
     return (
@@ -39,8 +54,14 @@ function Home() {
         <p className="loader"></p>
       </div>
     );
-  } else if (users?.data.length) {
-    return (
+  }
+
+  if (!users?.data.length) {
+    return <ErrorPage />;
+  }
+
+  return (
+    <>
       <StyledHomeContainer>
         <StyledGrid>
           {users.data.map((user: User) => {
@@ -72,8 +93,22 @@ function Home() {
           })}
         </StyledGrid>
       </StyledHomeContainer>
-    );
-  } else return <ErrorPage />;
+      <StyledFooter>
+        <button
+          onClick={() => dispatch(decrement())}
+          disabled={pageStore === 1}
+        >
+          <ArrowLeft />
+        </button>
+        <button
+          onClick={() => dispatch(increment())}
+          disabled={pageStore === users.total_pages}
+        >
+          <ArrowRight />
+        </button>
+      </StyledFooter>
+    </>
+  );
 }
 
-export default Home;
+export default UsersPage;

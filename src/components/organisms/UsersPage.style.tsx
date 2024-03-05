@@ -5,7 +5,8 @@ export const StyledHomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 
   @media (min-width: 768px) {
     font-size: large;
@@ -92,4 +93,16 @@ export const StyledButton = styled.button`
     background-color: ${({ theme }) => theme.colors.lightCyan};
     cursor: pointer;
   }
+`;
+
+export const StyledFooter = styled.footer`
+  position: fixed;
+  bottom: 0px;
+  z-index: 10;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background-color: ${({ theme }) => theme.colors.grey};
 `;

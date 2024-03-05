@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledErrorDiv = styled.div`
+export const StyledHomeDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -15,6 +15,10 @@ export const StyledErrorDiv = styled.div`
     @media (min-width: 768px) {
       font-size: 48px;
     }
+  }
+
+  h2 {
+    padding-top: 12px;
   }
 
   p {
