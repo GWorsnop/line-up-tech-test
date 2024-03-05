@@ -10,6 +10,7 @@ import {
   ExtraDetailsContainer,
 } from "./SingleUserPage.style";
 import ErrorPage from "../molecules/errorPage";
+import { Loader, LoadingContainer } from "../styles/Loader.style";
 
 function SingleUserPage() {
   const { userId } = useParams();
@@ -17,9 +18,9 @@ function SingleUserPage() {
 
   if (isLoading) {
     return (
-      <div>
-        <p className="loader"></p>
-      </div>
+      <LoadingContainer>
+        <Loader></Loader>
+      </LoadingContainer>
     );
   }
   if (!user) {
