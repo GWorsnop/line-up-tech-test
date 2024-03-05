@@ -45,6 +45,8 @@ I intentionally used React, Typescript and Redux to build this as I know that th
 
 In this task there were a couple of small issues I spent a lot of time considering - the main one being managing state / using the store alongside URL params. In the end I could either get one or the other working, not both. There is some functionality there for the params, but I feel I am missing one small thing. I would love to discuss this with you in more detail at some stage.
 
+I have proposed a fix to the issue in a draft PR that changes the single source of truth back to the URL. https://github.com/GWorsnop/line-up-tech-test/pull/5 This would be my first area to focus on if I were to continue the task going forwards. The use of useNavigate allows for pagination to change the value of the URL rather than the store, meaning there is no conflicting state.
+
 In terms of styling, I intentionally tried to match the colour palette of your current website https://lineupnow.com/ - you can see the coolor palette I made here and used for the theme https://coolors.co/ffffff-f6f8fb-399ba2-012b4f-121212.
 
 There is lots of room for this task to be extended, I have shown some places it could for example in the header. Navigating to different pages across the site, including the home page which needs creating.
