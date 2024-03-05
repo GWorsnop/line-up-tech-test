@@ -5,8 +5,8 @@ export const StyledHomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 
   @media (min-width: 768px) {
     font-size: large;
@@ -20,12 +20,12 @@ export const StyledGrid = styled.div`
 
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
-    gap: 50px;
+    gap: 40px;
   }
 
   @media (min-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
+    gap: 40px;
   }
 `;
 

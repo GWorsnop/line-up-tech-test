@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   StyledButton,
@@ -16,7 +16,8 @@ import ErrorPage from "../molecules/errorPage";
 import { ArrowLeft, ArrowRight } from "react-feather";
 import type { RootState } from "../../redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment, setToValue } from "../../redux/pageSlice";
+import { decrement, increment } from "../../redux/pageSlice";
+import { Loader, LoadingContainer } from "../styles/Loader.style";
 
 type User = {
   id: number;
@@ -28,7 +29,7 @@ type User = {
 
 function UsersPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pageURL = Number(searchParams.get("page") ?? 1);
+  const pageURL = Number(searchParams.get("page"));
   const pageStore = useSelector((state: RootState) => state.page.page);
 
   const dispatch = useDispatch();
@@ -36,23 +37,18 @@ function UsersPage() {
 
   // I struggled here - I couldn't get the URL to match the store information when reloading the page.
   // I would to discuss this further in more detail. I tried to use 2 useEffects but still couldnt figure it out.
-  useEffect(() => {
-    if (pageURL !== pageStore) {
-      dispatch(setToValue(pageURL));
-    }
-  }, [pageURL]);
 
   useEffect(() => {
     if (pageURL !== pageStore) {
       setSearchParams({ page: pageStore.toString() });
     }
-  }, [pageStore]);
+  });
 
   if (isLoading) {
     return (
-      <div>
-        <p className="loader"></p>
-      </div>
+      <LoadingContainer>
+        <Loader></Loader>
+      </LoadingContainer>
     );
   }
 
@@ -93,6 +89,7 @@ function UsersPage() {
           })}
         </StyledGrid>
       </StyledHomeContainer>
+      {/* // These arrows use a reducer to change the store for the page number  */}
       <StyledFooter>
         <button
           onClick={() => dispatch(decrement())}
