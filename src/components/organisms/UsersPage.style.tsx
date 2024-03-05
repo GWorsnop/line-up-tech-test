@@ -6,7 +6,7 @@ export const StyledHomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 50px;
 
   @media (min-width: 768px) {
     font-size: large;
@@ -62,7 +62,7 @@ export const StyledList = styled.dl`
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 0 4px;
-  height: 100px;
+  height: 75px;
   width: 100%;
   padding: 8px 0;
 

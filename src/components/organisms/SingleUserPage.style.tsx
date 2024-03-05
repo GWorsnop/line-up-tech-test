@@ -5,12 +5,12 @@ export const StyledUserContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 50px;
 
   @media (min-width: 768px) {
     flex-direction: row;
     justify-content: center;
-    padding-top: 150px;
+    padding-top: 100px;
   }
 `;
 
