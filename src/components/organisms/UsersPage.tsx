@@ -39,7 +39,7 @@ function UsersPage() {
   // I would to discuss this further in more detail. I tried to use 2 useEffects but still couldnt figure it out.
 
   useEffect(() => {
-    if (!pageURL) {
+    if (!pageURL || pageURL !== pageStore) {
       setSearchParams({ page: pageStore.toString() });
     }
   });
