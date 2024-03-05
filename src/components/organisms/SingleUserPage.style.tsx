@@ -5,12 +5,12 @@ export const StyledUserContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
+  padding-top: 25px;
 
   @media (min-width: 768px) {
     flex-direction: row;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 50px;
   }
 `;
 
@@ -58,13 +58,12 @@ export const StyledUserEmail = styled.div`
 `;
 
 export const ExtraDetailsContainer = styled.div`
-  padding-top: 40px;
   display: flex;
   flex-direction: column;
 
   @media (min-width: 768px) {
     flex-direction: row;
-    padding: 80px 20px 0;
+    padding: 50px 20px 0;
   }
 
   div {
