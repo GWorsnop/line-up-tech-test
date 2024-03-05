@@ -1,4 +1,4 @@
-# HeliosX Tech Test
+# Line-Up Tech Test
 
 Hosted Site: https://gworsnop-line-up-tech-test.vercel.app/
 
