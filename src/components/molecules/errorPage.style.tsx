@@ -6,7 +6,7 @@ export const StyledErrorDiv = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-top: 100px;
+  padding-top: 50px;
 
   h1 {
     font-size: 36px;
