@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./userAPI";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import pageReducer from "./pageSlice";
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    page: pageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),
